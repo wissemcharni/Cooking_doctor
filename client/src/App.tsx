@@ -6,11 +6,11 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import Navigation from "@/components/layout/navigation";
 import Footer from "@/components/layout/footer";
 import PromoBanner from "@/components/ui/promo-banner";
-import Home from "@/pages/home";
-import Menu from "@/pages/menu";
-import Order from "@/pages/order";
-import Contact from "@/pages/contact";
-import NotFound from "@/pages/not-found";
+import Home from "./pages/home";
+import Menu from "./pages/menu";
+import Order from "./pages/order";
+import Contact from "./pages/contact";
+import NotFound from "./pages/not-found";
 
 function Router() {
   return (

@@ -8,6 +8,19 @@ This is a premium tiramisu ordering website built for "Tiramisu by Cooking Docto
 
 Preferred communication style: Simple, everyday language.
 
+### Revised Plan (January 2025)
+User requested removal of the following features from the original plan:
+- WhatsApp ordering integration with prefilled messages
+- Customer testimonials slider
+
+Final implementation includes:
+- Elegant, mobile-friendly design with cream/espresso/gold color palette
+- Homepage with hero section, about section, Instagram gallery (without testimonials slider)
+- Menu page with 6 tiramisu flavors and pricing
+- Order form with webhook integration for Make.com/Zapier
+- Contact page with social media links (without WhatsApp integration)
+- Navigation, promo banner, FAQ section, and countdown timer
+
 ## System Architecture
 
 ### Frontend Architecture

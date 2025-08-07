@@ -26,25 +26,17 @@ export default function Navigation() {
           </Link>
           
           <div className="hidden md:flex space-x-8">
-            <Link href="/">
-              <a className={`hover:text-gold transition-colors duration-300 ${isActive("/") ? "text-gold" : "text-espresso"}`}>
-                Home
-              </a>
+            <Link href="/" className={`hover:text-gold transition-colors duration-300 ${isActive("/") ? "text-gold" : "text-espresso"}`}>
+              Home
             </Link>
-            <Link href="/menu">
-              <a className={`hover:text-gold transition-colors duration-300 ${isActive("/menu") ? "text-gold" : "text-espresso"}`}>
-                Menu
-              </a>
+            <Link href="/menu" className={`hover:text-gold transition-colors duration-300 ${isActive("/menu") ? "text-gold" : "text-espresso"}`}>
+              Menu
             </Link>
-            <Link href="/order">
-              <a className={`hover:text-gold transition-colors duration-300 ${isActive("/order") ? "text-gold" : "text-espresso"}`}>
-                Order
-              </a>
+            <Link href="/order" className={`hover:text-gold transition-colors duration-300 ${isActive("/order") ? "text-gold" : "text-espresso"}`}>
+              Order
             </Link>
-            <Link href="/contact">
-              <a className={`hover:text-gold transition-colors duration-300 ${isActive("/contact") ? "text-gold" : "text-espresso"}`}>
-                Contact
-              </a>
+            <Link href="/contact" className={`hover:text-gold transition-colors duration-300 ${isActive("/contact") ? "text-gold" : "text-espresso"}`}>
+              Contact
             </Link>
           </div>
           
@@ -60,37 +52,33 @@ export default function Navigation() {
         
         {isOpen && (
           <div className="md:hidden mt-4 pb-4 space-y-3 animate-fade-in">
-            <Link href="/">
-              <a 
-                className={`block hover:text-gold transition-colors duration-300 ${isActive("/") ? "text-gold" : "text-espresso"}`}
-                onClick={toggleMenu}
-              >
-                Home
-              </a>
+            <Link 
+              href="/"
+              className={`block hover:text-gold transition-colors duration-300 ${isActive("/") ? "text-gold" : "text-espresso"}`}
+              onClick={toggleMenu}
+            >
+              Home
             </Link>
-            <Link href="/menu">
-              <a 
-                className={`block hover:text-gold transition-colors duration-300 ${isActive("/menu") ? "text-gold" : "text-espresso"}`}
-                onClick={toggleMenu}
-              >
-                Menu
-              </a>
+            <Link 
+              href="/menu"
+              className={`block hover:text-gold transition-colors duration-300 ${isActive("/menu") ? "text-gold" : "text-espresso"}`}
+              onClick={toggleMenu}
+            >
+              Menu
             </Link>
-            <Link href="/order">
-              <a 
-                className={`block hover:text-gold transition-colors duration-300 ${isActive("/order") ? "text-gold" : "text-espresso"}`}
-                onClick={toggleMenu}
-              >
-                Order
-              </a>
+            <Link 
+              href="/order"
+              className={`block hover:text-gold transition-colors duration-300 ${isActive("/order") ? "text-gold" : "text-espresso"}`}
+              onClick={toggleMenu}
+            >
+              Order
             </Link>
-            <Link href="/contact">
-              <a 
-                className={`block hover:text-gold transition-colors duration-300 ${isActive("/contact") ? "text-gold" : "text-espresso"}`}
-                onClick={toggleMenu}
-              >
-                Contact
-              </a>
+            <Link 
+              href="/contact"
+              className={`block hover:text-gold transition-colors duration-300 ${isActive("/contact") ? "text-gold" : "text-espresso"}`}
+              onClick={toggleMenu}
+            >
+              Contact
             </Link>
           </div>
         )}
