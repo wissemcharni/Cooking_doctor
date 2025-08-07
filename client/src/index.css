@@ -1,0 +1,92 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: hsl(36, 30%, 96%);
+  --foreground: hsl(14, 25%, 29%);
+  --card: hsl(36, 36%, 98%);
+  --card-foreground: hsl(14, 25%, 29%);
+  --popover: hsl(36, 36%, 98%);
+  --popover-foreground: hsl(14, 25%, 29%);
+  --primary: hsl(42, 55%, 50%);
+  --primary-foreground: hsl(14, 25%, 29%);
+  --secondary: hsl(14, 25%, 29%);
+  --secondary-foreground: hsl(36, 36%, 98%);
+  --muted: hsl(36, 20%, 92%);
+  --muted-foreground: hsl(14, 25%, 45%);
+  --accent: hsl(42, 55%, 50%);
+  --accent-foreground: hsl(14, 25%, 29%);
+  --destructive: hsl(356, 91%, 54%);
+  --destructive-foreground: hsl(0, 0%, 100%);
+  --border: hsl(36, 20%, 88%);
+  --input: hsl(36, 25%, 94%);
+  --ring: hsl(42, 55%, 50%);
+  --radius: 1rem;
+  
+  /* Brand Colors */
+  --cream: hsl(36, 30%, 96%);
+  --espresso: hsl(14, 25%, 29%);
+  --gold: hsl(42, 55%, 50%);
+  --warm-white: hsl(36, 36%, 98%);
+  
+  /* Typography */
+  --font-playfair: 'Playfair Display', serif;
+  --font-inter: 'Inter', sans-serif;
+}
+
+.dark {
+  --background: hsl(14, 25%, 12%);
+  --foreground: hsl(36, 30%, 90%);
+  --card: hsl(14, 25%, 15%);
+  --card-foreground: hsl(36, 30%, 85%);
+  --popover: hsl(14, 25%, 12%);
+  --popover-foreground: hsl(36, 30%, 90%);
+  --primary: hsl(42, 55%, 50%);
+  --primary-foreground: hsl(14, 25%, 12%);
+  --secondary: hsl(36, 30%, 85%);
+  --secondary-foreground: hsl(14, 25%, 15%);
+  --muted: hsl(14, 25%, 18%);
+  --muted-foreground: hsl(36, 20%, 60%);
+  --accent: hsl(42, 55%, 50%);
+  --accent-foreground: hsl(14, 25%, 12%);
+  --destructive: hsl(356, 91%, 54%);
+  --destructive-foreground: hsl(0, 0%, 100%);
+  --border: hsl(14, 25%, 20%);
+  --input: hsl(14, 25%, 18%);
+  --ring: hsl(42, 55%, 50%);
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply font-inter antialiased bg-background text-foreground;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-playfair);
+  }
+}
+
+@layer components {
+  .hero-bg {
+    background-image: linear-gradient(rgba(75, 46, 43, 0.4), rgba(75, 46, 43, 0.4)), 
+                      url('https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1920&h=1080');
+    @apply bg-cover bg-center bg-no-repeat;
+  }
+}
+
+@layer utilities {
+  .text-playfair {
+    font-family: var(--font-playfair);
+  }
+  
+  .text-inter {
+    font-family: var(--font-inter);
+  }
+}
