@@ -1,0 +1,81 @@
+Create a beautiful, mobile-friendly ordering website for a premium homemade tiramisu brand called **"Tiramisu by Cooking Doctor"**.
+
+🧁 BRAND IDENTITY:
+- Name: Tiramisu by Cooking Doctor
+- Brand style: Elegant, cozy, minimal
+- Color palette: Cream background (#F8F4ED), espresso brown text (#4B2E2B), gold accent (#CBA135)
+- Typography: Serif font for headings (like Playfair Display or Cormorant), sans-serif font for body (like Lato or Inter)
+- Visual style: Large, appetizing food images, soft shadows, rounded corners, subtle hover effects
+
+🖥️ WEBSITE PAGES AND SECTIONS:
+
+1. **Home Page**
+- Fullscreen hero image of tiramisu with title: "Elegant Homemade Tiramisu"
+- Subtext: "Crafted with love by the Cooking Doctor"
+- Call-to-action button: “Order Now” → links to the order form
+- About section with image + text about the founder and her passion for tiramisu
+- Instagram gallery: 6-image grid (embed or mockup with placeholders)
+- Customer testimonials: horizontal slider or quote cards with soft background and customer names
+
+2. **Menu Page**
+- Title: "Our Flavors"
+- Responsive grid of tiramisu products (3 per row on desktop, 1 per row on mobile)
+- Each card includes:
+  - Product name (e.g. Classic, Pistachio, Strawberry, Nutella, Lotus)
+  - Product description (short, cozy text)
+  - Available sizes: Small (€6), Medium (€10), Party Box (€25)
+  - “Order Now” button that scrolls or links to the order form
+  - Optional: ribbon/tag for “Flavor of the Month”
+
+3. **Order Form Page**
+- Simple, elegant form with rounded input fields and clear labels
+- Fields (in this order):
+  - Full Name (text input)
+  - Phone Number (tel input)
+  - Delivery Address (textarea)
+  - Product Selection (checkboxes or dropdowns: Classic, Pistachio, Strawberry, etc.)
+  - Quantity (number input per product)
+  - Delivery Date (date picker)
+  - Delivery Time (time picker)
+  - Notes (optional text area: allergies, occasion, etc.)
+  - Payment Method (radio buttons – default to “Cash on Delivery” only)
+- Submit button with soft animation
+- After submission, show a confirmation message: “Thanks! We’ll contact you shortly to confirm your order.”
+
+📤 FORM AUTOMATION:
+- On form submit, send data to a **Webhook endpoint** (to be connected with Make.com or Zapier).
+- No database storage; the webhook sends the data directly to **Google Sheets** (via automation scenario).
+- Ensure form POST method is enabled and payload includes all user inputs.
+
+4. **Contact / Social Page**
+- Embed or link to Instagram account
+- WhatsApp ordering link with prefilled message (e.g., "Hi, I’d like to order tiramisu!")
+- Optional: phone number and email
+
+📱 MOBILE OPTIMIZATION:
+- Fully responsive layout
+- Mobile-first design with stacked sections
+- Large tap areas for buttons and form fields
+- Fast loading images (WebP or optimized JPEG)
+
+🌟 EXTRAS (OPTIONAL):
+- Promo banner at the top: “🎁 Pre-order for Holidays – Limited Slots Available!”
+- Countdown timer to next delivery batch (e.g., "Next delivery in: 2 days 4 hours")
+- FAQ accordion at the bottom with questions like:
+  - How long does tiramisu last?
+  - Do you use eggs?
+  - Do you deliver outside the city?
+
+📦 TOOLS INTEGRATION:
+- Embed or build native order form inside Builder.io
+- Form submission uses **POST** to external webhook URL (configured in Make.com)
+- In Make.com, the flow should:
+  - Accept webhook payload
+  - Add new row to Google Sheet
+  - (Optional) Send email to seller
+  - (Optional) Trigger WhatsApp or Telegram message
+
+🎯 GOAL:
+Make the site visually appealing, easy to use, and optimized for mobile customers ordering via Instagram. Emphasize the handmade, premium feel. No login, no checkout, only cash-on-delivery orders via the form.
+
+Do not use a database or backend – everything should be frontend + webhook-based.
