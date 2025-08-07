@@ -64,8 +64,14 @@ export default function Order() {
 
   const submitOrderMutation = useMutation({
     mutationFn: async (data: Order) => {
-      const webhookUrl = process.env.VITE_WEBHOOK_URL || "https://your-webhook-url.com/order";
-      return apiRequest("POST", webhookUrl, data);
+      const webhookUrl = "https://hook.eu2.make.com/oad631ehh8j4qf7ooslkciijytqe8bfa";
+      return fetch(webhookUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
     },
     onSuccess: () => {
       setIsSubmitted(true);
