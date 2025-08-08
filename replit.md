@@ -13,11 +13,18 @@ User requested removal of the following features from the original plan:
 - WhatsApp ordering integration with prefilled messages
 - Customer testimonials slider
 
+Recent Updates (January 2025):
+- Updated menu to 4 Tunisian tiramisu flavors with DT pricing
+- Added Mousse au chocolat (sans sucre 72% cacao) at 10 DT
+- Created stores section showing retail partners across Tunisia
+- Enhanced order form to allow multiple sizes of same product simultaneously
+
 Final implementation includes:
 - Elegant, mobile-friendly design with cream/espresso/gold color palette
 - Homepage with hero section, about section, Instagram gallery (without testimonials slider)
-- Menu page with 6 tiramisu flavors and pricing
-- Order form with webhook integration for Make.com/Zapier
+- Menu page with 4 tiramisu flavors (Pistache, Spéculoos, Noisette, Fraise) + Mousse au chocolat
+- Order form with webhook integration for Make.com/Zapier and flexible quantity selection
+- Stores page listing retail partners with Instagram links
 - Contact page with social media links (without WhatsApp integration)
 - Navigation, promo banner, FAQ section, and countdown timer
 

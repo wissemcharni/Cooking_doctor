@@ -35,6 +35,7 @@ const orderFormSchema = z.object({
   noisetteSmall: z.string().optional(),
   noisetteLarge: z.string().optional(),
   noisetteBirthday: z.string().optional(),
+  mousse: z.string().optional(),
 });
 
 type OrderFormData = z.infer<typeof orderFormSchema>;
@@ -62,6 +63,7 @@ export default function Order() {
       noisetteSmall: "",
       noisetteLarge: "",
       noisetteBirthday: "",
+      mousse: "",
     },
   });
 
@@ -94,11 +96,11 @@ export default function Order() {
   });
 
   const onSubmit = (data: OrderFormData) => {
-    const products = [];
+    const products: Array<{ name: string; size: "small" | "large" | "birthday" | "standard"; quantity: number; price: number }> = [];
     const pricing = { small: 10, large: 15 };
 
     // Helper function to add product if quantity is provided
-    const addProduct = (name: string, size: string, quantityStr: string | undefined) => {
+    const addProduct = (name: string, size: "small" | "large" | "birthday", quantityStr: string | undefined) => {
       if (quantityStr && quantityStr.trim() && parseInt(quantityStr) > 0) {
         const quantity = parseInt(quantityStr);
         let price = 0;
@@ -130,6 +132,17 @@ export default function Order() {
     addProduct("Tiramisu Noisette", "small", data.noisetteSmall);
     addProduct("Tiramisu Noisette", "large", data.noisetteLarge);
     addProduct("Tiramisu Noisette", "birthday", data.noisetteBirthday);
+
+    // Process Mousse au chocolat
+    if (data.mousse && data.mousse.trim() && parseInt(data.mousse) > 0) {
+      const quantity = parseInt(data.mousse);
+      products.push({
+        name: "Mousse au chocolat",
+        size: "standard",
+        quantity,
+        price: 10 * quantity,
+      });
+    }
 
     if (products.length === 0) {
       toast({
@@ -380,6 +393,25 @@ export default function Order() {
                           render={({ field }) => (
                             <FormItem>
                               <FormLabel className="text-sm">Birthday (Custom)</FormLabel>
+                              <FormControl>
+                                <Input type="number" min="0" max="10" placeholder="Qty" className="w-full" {...field} />
+                              </FormControl>
+                            </FormItem>
+                          )}
+                        />
+                      </div>
+                    </div>
+
+                    {/* Mousse au chocolat */}
+                    <div className="p-4 bg-warmWhite rounded-lg border border-espresso/20">
+                      <h5 className="font-semibold text-espresso mb-3">Mousse au chocolat</h5>
+                      <div className="grid grid-cols-1 gap-3">
+                        <FormField
+                          control={form.control}
+                          name="mousse"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel className="text-sm">Sans sucre 72% cacao (10 DT)</FormLabel>
                               <FormControl>
                                 <Input type="number" min="0" max="10" placeholder="Qty" className="w-full" {...field} />
                               </FormControl>

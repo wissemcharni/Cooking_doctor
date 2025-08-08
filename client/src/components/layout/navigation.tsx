@@ -35,6 +35,9 @@ export default function Navigation() {
             <Link href="/order" className={`hover:text-gold transition-colors duration-300 ${isActive("/order") ? "text-gold" : "text-espresso"}`}>
               Order
             </Link>
+            <Link href="/stores" className={`hover:text-gold transition-colors duration-300 ${isActive("/stores") ? "text-gold" : "text-espresso"}`}>
+              Stores
+            </Link>
             <Link href="/contact" className={`hover:text-gold transition-colors duration-300 ${isActive("/contact") ? "text-gold" : "text-espresso"}`}>
               Contact
             </Link>
@@ -72,6 +75,13 @@ export default function Navigation() {
               onClick={toggleMenu}
             >
               Order
+            </Link>
+            <Link 
+              href="/stores"
+              className={`block hover:text-gold transition-colors duration-300 ${isActive("/stores") ? "text-gold" : "text-espresso"}`}
+              onClick={toggleMenu}
+            >
+              Stores
             </Link>
             <Link 
               href="/contact"

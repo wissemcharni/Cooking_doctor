@@ -35,18 +35,27 @@ export default function ProductCard({ product }: ProductCardProps) {
         {!isComingSoon ? (
           <>
             <div className="space-y-2 mb-6">
-              <div className="flex justify-between items-center">
-                <span className="font-sans">Small</span>
-                <span className="font-semibold text-espresso">{product.pricing.small} DT</span>
-              </div>
-              <div className="flex justify-between items-center">
-                <span className="font-sans">Large</span>
-                <span className="font-semibold text-espresso">{product.pricing.medium} DT</span>
-              </div>
-              <div className="flex justify-between items-center">
-                <span className="font-sans">Birthday</span>
-                <span className="font-semibold text-espresso italic text-sm">Custom Price</span>
-              </div>
+              {product.id === "mousse" ? (
+                <div className="flex justify-between items-center">
+                  <span className="font-sans">Sans sucre 72% cacao</span>
+                  <span className="font-semibold text-espresso">{product.pricing.small} DT</span>
+                </div>
+              ) : (
+                <>
+                  <div className="flex justify-between items-center">
+                    <span className="font-sans">Small</span>
+                    <span className="font-semibold text-espresso">{product.pricing.small} DT</span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="font-sans">Large</span>
+                    <span className="font-semibold text-espresso">{product.pricing.medium} DT</span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="font-sans">Birthday</span>
+                    <span className="font-semibold text-espresso italic text-sm">Custom Price</span>
+                  </div>
+                </>
+              )}
             </div>
             <Link href="/order">
               <Button className="w-full bg-gold text-espresso hover:bg-gold/90 transition-colors duration-300 font-sans">

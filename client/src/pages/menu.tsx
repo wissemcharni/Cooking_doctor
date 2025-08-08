@@ -32,6 +32,14 @@ export default function Menu() {
       pricing: { small: 0, medium: 0, party: 0 },
       badge: "Coming Soon",
     },
+    {
+      id: "mousse",
+      name: "Mousse au chocolat",
+      description: "Rich sugar-free chocolate mousse made with 72% cacao for an intense, indulgent experience.",
+      image: "https://images.unsplash.com/photo-1541518763669-27fef04b14ea?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=600",
+      pricing: { small: 10, medium: 10, party: 0 },
+      badge: "Sans sucre",
+    },
   ];
 
   return (
