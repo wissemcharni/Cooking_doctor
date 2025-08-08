@@ -25,16 +25,16 @@ const orderFormSchema = z.object({
   deliveryTime: z.string().min(1, "Delivery time is required"),
   notes: z.string().optional(),
   paymentMethod: z.literal("cash"),
-  // Product selections
-  pistache: z.boolean().optional(),
-  pistacheSize: z.string().optional(),
-  pistacheQuantity: z.string().optional(),
-  speculoos: z.boolean().optional(),
-  speculoosSize: z.string().optional(),
-  speculoosQuantity: z.string().optional(),
-  noisette: z.boolean().optional(),
-  noisetteSize: z.string().optional(),
-  noisetteQuantity: z.string().optional(),
+  // Product selections - separate fields for each size
+  pistacheSmall: z.string().optional(),
+  pistacheLarge: z.string().optional(),
+  pistacheBirthday: z.string().optional(),
+  speculoosSmall: z.string().optional(),
+  speculoosLarge: z.string().optional(),
+  speculoosBirthday: z.string().optional(),
+  noisetteSmall: z.string().optional(),
+  noisetteLarge: z.string().optional(),
+  noisetteBirthday: z.string().optional(),
 });
 
 type OrderFormData = z.infer<typeof orderFormSchema>;
@@ -53,6 +53,15 @@ export default function Order() {
       deliveryTime: "",
       notes: "",
       paymentMethod: "cash",
+      pistacheSmall: "",
+      pistacheLarge: "",
+      pistacheBirthday: "",
+      speculoosSmall: "",
+      speculoosLarge: "",
+      speculoosBirthday: "",
+      noisetteSmall: "",
+      noisetteLarge: "",
+      noisetteBirthday: "",
     },
   });
 
@@ -86,38 +95,41 @@ export default function Order() {
 
   const onSubmit = (data: OrderFormData) => {
     const products = [];
-    const pricing = { small: 10, medium: 15, party: 0 };
+    const pricing = { small: 10, large: 15 };
 
-    // Process selected products
-    if (data.pistache && data.pistacheSize && data.pistacheQuantity) {
-      const price = data.pistacheSize === "party" ? "Custom Price" : pricing[data.pistacheSize as keyof typeof pricing] * parseInt(data.pistacheQuantity);
-      products.push({
-        name: "Tiramisu Pistache",
-        size: data.pistacheSize as "small" | "medium" | "party",
-        quantity: parseInt(data.pistacheQuantity),
-        price: typeof price === "number" ? price : 0,
-      });
-    }
+    // Helper function to add product if quantity is provided
+    const addProduct = (name: string, size: string, quantityStr: string | undefined) => {
+      if (quantityStr && quantityStr.trim() && parseInt(quantityStr) > 0) {
+        const quantity = parseInt(quantityStr);
+        let price = 0;
+        
+        if (size === "small") price = pricing.small * quantity;
+        else if (size === "large") price = pricing.large * quantity;
+        // Birthday cakes have custom pricing (0 indicates custom)
+        
+        products.push({
+          name,
+          size,
+          quantity,
+          price,
+        });
+      }
+    };
 
-    if (data.speculoos && data.speculoosSize && data.speculoosQuantity) {
-      const price = data.speculoosSize === "party" ? "Custom Price" : pricing[data.speculoosSize as keyof typeof pricing] * parseInt(data.speculoosQuantity);
-      products.push({
-        name: "Tiramisu Spéculoos",
-        size: data.speculoosSize as "small" | "medium" | "party",
-        quantity: parseInt(data.speculoosQuantity),
-        price: typeof price === "number" ? price : 0,
-      });
-    }
+    // Process Tiramisu Pistache
+    addProduct("Tiramisu Pistache", "small", data.pistacheSmall);
+    addProduct("Tiramisu Pistache", "large", data.pistacheLarge);
+    addProduct("Tiramisu Pistache", "birthday", data.pistacheBirthday);
 
-    if (data.noisette && data.noisetteSize && data.noisetteQuantity) {
-      const price = data.noisetteSize === "party" ? "Custom Price" : pricing[data.noisetteSize as keyof typeof pricing] * parseInt(data.noisetteQuantity);
-      products.push({
-        name: "Tiramisu Noisette",
-        size: data.noisetteSize as "small" | "medium" | "party",
-        quantity: parseInt(data.noisetteQuantity),
-        price: typeof price === "number" ? price : 0,
-      });
-    }
+    // Process Tiramisu Spéculoos
+    addProduct("Tiramisu Spéculoos", "small", data.speculoosSmall);
+    addProduct("Tiramisu Spéculoos", "large", data.speculoosLarge);
+    addProduct("Tiramisu Spéculoos", "birthday", data.speculoosBirthday);
+
+    // Process Tiramisu Noisette
+    addProduct("Tiramisu Noisette", "small", data.noisetteSmall);
+    addProduct("Tiramisu Noisette", "large", data.noisetteLarge);
+    addProduct("Tiramisu Noisette", "birthday", data.noisetteBirthday);
 
     if (products.length === 0) {
       toast({
@@ -249,47 +261,41 @@ export default function Order() {
                     <h4 className="font-semibold text-espresso">Select Your Tiramisu</h4>
                     
                     {/* Tiramisu Pistache */}
-                    <div className="flex items-center justify-between p-4 bg-warmWhite rounded-lg border border-espresso/20">
-                      <FormField
-                        control={form.control}
-                        name="pistache"
-                        render={({ field }) => (
-                          <FormItem className="flex items-center space-x-3">
-                            <FormControl>
-                              <Checkbox checked={field.value} onCheckedChange={field.onChange} />
-                            </FormControl>
-                            <FormLabel className="font-medium">Tiramisu Pistache</FormLabel>
-                          </FormItem>
-                        )}
-                      />
-                      <div className="flex space-x-2">
+                    <div className="p-4 bg-warmWhite rounded-lg border border-espresso/20">
+                      <h5 className="font-semibold text-espresso mb-3">Tiramisu Pistache</h5>
+                      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                         <FormField
                           control={form.control}
-                          name="pistacheSize"
+                          name="pistacheSmall"
                           render={({ field }) => (
                             <FormItem>
-                              <Select onValueChange={field.onChange} value={field.value}>
-                                <FormControl>
-                                  <SelectTrigger className="w-32">
-                                    <SelectValue placeholder="Size" />
-                                  </SelectTrigger>
-                                </FormControl>
-                                <SelectContent>
-                                  <SelectItem value="small">Small (10 DT)</SelectItem>
-                                  <SelectItem value="medium">Large (15 DT)</SelectItem>
-                                  <SelectItem value="party">Birthday (Custom)</SelectItem>
-                                </SelectContent>
-                              </Select>
+                              <FormLabel className="text-sm">Small (10 DT)</FormLabel>
+                              <FormControl>
+                                <Input type="number" min="0" max="10" placeholder="Qty" className="w-full" {...field} />
+                              </FormControl>
                             </FormItem>
                           )}
                         />
                         <FormField
                           control={form.control}
-                          name="pistacheQuantity"
+                          name="pistacheLarge"
                           render={({ field }) => (
                             <FormItem>
+                              <FormLabel className="text-sm">Large (15 DT)</FormLabel>
                               <FormControl>
-                                <Input type="number" min="1" max="10" placeholder="Qty" className="w-16" {...field} />
+                                <Input type="number" min="0" max="10" placeholder="Qty" className="w-full" {...field} />
+                              </FormControl>
+                            </FormItem>
+                          )}
+                        />
+                        <FormField
+                          control={form.control}
+                          name="pistacheBirthday"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel className="text-sm">Birthday (Custom)</FormLabel>
+                              <FormControl>
+                                <Input type="number" min="0" max="10" placeholder="Qty" className="w-full" {...field} />
                               </FormControl>
                             </FormItem>
                           )}
@@ -298,47 +304,41 @@ export default function Order() {
                     </div>
 
                     {/* Tiramisu Spéculoos */}
-                    <div className="flex items-center justify-between p-4 bg-warmWhite rounded-lg border border-espresso/20">
-                      <FormField
-                        control={form.control}
-                        name="speculoos"
-                        render={({ field }) => (
-                          <FormItem className="flex items-center space-x-3">
-                            <FormControl>
-                              <Checkbox checked={field.value} onCheckedChange={field.onChange} />
-                            </FormControl>
-                            <FormLabel className="font-medium">Tiramisu Spéculoos</FormLabel>
-                          </FormItem>
-                        )}
-                      />
-                      <div className="flex space-x-2">
+                    <div className="p-4 bg-warmWhite rounded-lg border border-espresso/20">
+                      <h5 className="font-semibold text-espresso mb-3">Tiramisu Spéculoos</h5>
+                      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                         <FormField
                           control={form.control}
-                          name="speculoosSize"
+                          name="speculoosSmall"
                           render={({ field }) => (
                             <FormItem>
-                              <Select onValueChange={field.onChange} value={field.value}>
-                                <FormControl>
-                                  <SelectTrigger className="w-32">
-                                    <SelectValue placeholder="Size" />
-                                  </SelectTrigger>
-                                </FormControl>
-                                <SelectContent>
-                                  <SelectItem value="small">Small (10 DT)</SelectItem>
-                                  <SelectItem value="medium">Large (15 DT)</SelectItem>
-                                  <SelectItem value="party">Birthday (Custom)</SelectItem>
-                                </SelectContent>
-                              </Select>
+                              <FormLabel className="text-sm">Small (10 DT)</FormLabel>
+                              <FormControl>
+                                <Input type="number" min="0" max="10" placeholder="Qty" className="w-full" {...field} />
+                              </FormControl>
                             </FormItem>
                           )}
                         />
                         <FormField
                           control={form.control}
-                          name="speculoosQuantity"
+                          name="speculoosLarge"
                           render={({ field }) => (
                             <FormItem>
+                              <FormLabel className="text-sm">Large (15 DT)</FormLabel>
                               <FormControl>
-                                <Input type="number" min="1" max="10" placeholder="Qty" className="w-16" {...field} />
+                                <Input type="number" min="0" max="10" placeholder="Qty" className="w-full" {...field} />
+                              </FormControl>
+                            </FormItem>
+                          )}
+                        />
+                        <FormField
+                          control={form.control}
+                          name="speculoosBirthday"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel className="text-sm">Birthday (Custom)</FormLabel>
+                              <FormControl>
+                                <Input type="number" min="0" max="10" placeholder="Qty" className="w-full" {...field} />
                               </FormControl>
                             </FormItem>
                           )}
@@ -347,47 +347,41 @@ export default function Order() {
                     </div>
 
                     {/* Tiramisu Noisette */}
-                    <div className="flex items-center justify-between p-4 bg-warmWhite rounded-lg border border-espresso/20">
-                      <FormField
-                        control={form.control}
-                        name="noisette"
-                        render={({ field }) => (
-                          <FormItem className="flex items-center space-x-3">
-                            <FormControl>
-                              <Checkbox checked={field.value} onCheckedChange={field.onChange} />
-                            </FormControl>
-                            <FormLabel className="font-medium">Tiramisu Noisette</FormLabel>
-                          </FormItem>
-                        )}
-                      />
-                      <div className="flex space-x-2">
+                    <div className="p-4 bg-warmWhite rounded-lg border border-espresso/20">
+                      <h5 className="font-semibold text-espresso mb-3">Tiramisu Noisette</h5>
+                      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                         <FormField
                           control={form.control}
-                          name="noisetteSize"
+                          name="noisetteSmall"
                           render={({ field }) => (
                             <FormItem>
-                              <Select onValueChange={field.onChange} value={field.value}>
-                                <FormControl>
-                                  <SelectTrigger className="w-32">
-                                    <SelectValue placeholder="Size" />
-                                  </SelectTrigger>
-                                </FormControl>
-                                <SelectContent>
-                                  <SelectItem value="small">Small (10 DT)</SelectItem>
-                                  <SelectItem value="medium">Large (15 DT)</SelectItem>
-                                  <SelectItem value="party">Birthday (Custom)</SelectItem>
-                                </SelectContent>
-                              </Select>
+                              <FormLabel className="text-sm">Small (10 DT)</FormLabel>
+                              <FormControl>
+                                <Input type="number" min="0" max="10" placeholder="Qty" className="w-full" {...field} />
+                              </FormControl>
                             </FormItem>
                           )}
                         />
                         <FormField
                           control={form.control}
-                          name="noisetteQuantity"
+                          name="noisetteLarge"
                           render={({ field }) => (
                             <FormItem>
+                              <FormLabel className="text-sm">Large (15 DT)</FormLabel>
                               <FormControl>
-                                <Input type="number" min="1" max="10" placeholder="Qty" className="w-16" {...field} />
+                                <Input type="number" min="0" max="10" placeholder="Qty" className="w-full" {...field} />
+                              </FormControl>
+                            </FormItem>
+                          )}
+                        />
+                        <FormField
+                          control={form.control}
+                          name="noisetteBirthday"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel className="text-sm">Birthday (Custom)</FormLabel>
+                              <FormControl>
+                                <Input type="number" min="0" max="10" placeholder="Qty" className="w-full" {...field} />
                               </FormControl>
                             </FormItem>
                           )}
