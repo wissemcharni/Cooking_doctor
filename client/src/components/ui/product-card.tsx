@@ -8,42 +8,59 @@ interface ProductCardProps {
 }
 
 export default function ProductCard({ product }: ProductCardProps) {
+  const isComingSoon = product.badge === "Coming Soon";
+  
   return (
-    <Card className="bg-warmWhite shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
+    <Card className={`bg-warmWhite shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 ${isComingSoon ? 'opacity-75' : ''}`}>
       <div className="relative">
         <img 
           src={product.image}
           alt={product.name}
-          className="w-full h-48 object-cover"
+          className={`w-full h-48 object-cover ${isComingSoon ? 'grayscale' : ''}`}
         />
         {product.badge && (
-          <div className="absolute top-4 right-4 bg-gold text-espresso px-3 py-1 rounded-full text-sm font-semibold">
+          <div className={`absolute top-4 right-4 px-3 py-1 rounded-full text-sm font-semibold ${
+            isComingSoon 
+              ? 'bg-espresso/80 text-warmWhite' 
+              : 'bg-gold text-espresso'
+          }`}>
             {product.badge}
           </div>
         )}
       </div>
       <CardContent className="p-6">
         <h3 className="font-playfair text-2xl font-bold mb-3 text-espresso">{product.name}</h3>
-        <p className="text-espresso/70 mb-4">{product.description}</p>
-        <div className="space-y-2 mb-6">
-          <div className="flex justify-between">
-            <span>Small (1-2 portions)</span>
-            <span className="font-semibold">€{product.pricing.small}</span>
+        <p className="text-espresso/70 mb-4 font-sans">{product.description}</p>
+        
+        {!isComingSoon ? (
+          <>
+            <div className="space-y-2 mb-6">
+              <div className="flex justify-between items-center">
+                <span className="font-sans">Small</span>
+                <span className="font-semibold text-espresso">{product.pricing.small} DT</span>
+              </div>
+              <div className="flex justify-between items-center">
+                <span className="font-sans">Large</span>
+                <span className="font-semibold text-espresso">{product.pricing.medium} DT</span>
+              </div>
+              <div className="flex justify-between items-center">
+                <span className="font-sans">Birthday</span>
+                <span className="font-semibold text-espresso italic text-sm">Custom Price</span>
+              </div>
+            </div>
+            <Link href="/order">
+              <Button className="w-full bg-gold text-espresso hover:bg-gold/90 transition-colors duration-300 font-sans">
+                Order Now
+              </Button>
+            </Link>
+          </>
+        ) : (
+          <div className="text-center py-4">
+            <Button disabled className="w-full bg-espresso/20 text-espresso/50 cursor-not-allowed font-sans">
+              Coming Soon
+            </Button>
           </div>
-          <div className="flex justify-between">
-            <span>Medium (3-4 portions)</span>
-            <span className="font-semibold">€{product.pricing.medium}</span>
-          </div>
-          <div className="flex justify-between">
-            <span>Party Box (8-10 portions)</span>
-            <span className="font-semibold">€{product.pricing.party}</span>
-          </div>
-        </div>
-        <Link href="/order">
-          <Button className="w-full bg-gold text-espresso hover:bg-gold/90 transition-colors duration-300">
-            Order Now
-          </Button>
-        </Link>
+        )}
       </CardContent>
     </Card>
   );

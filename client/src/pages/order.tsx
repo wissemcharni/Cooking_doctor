@@ -26,21 +26,15 @@ const orderFormSchema = z.object({
   notes: z.string().optional(),
   paymentMethod: z.literal("cash"),
   // Product selections
-  classic: z.boolean().optional(),
-  classicSize: z.string().optional(),
-  classicQuantity: z.string().optional(),
-  pistachio: z.boolean().optional(),
-  pistachioSize: z.string().optional(),
-  pistachioQuantity: z.string().optional(),
-  strawberry: z.boolean().optional(),
-  strawberrySize: z.string().optional(),
-  strawberryQuantity: z.string().optional(),
-  nutella: z.boolean().optional(),
-  nutellaSize: z.string().optional(),
-  nutellaQuantity: z.string().optional(),
-  lotus: z.boolean().optional(),
-  lotusSize: z.string().optional(),
-  lotusQuantity: z.string().optional(),
+  pistache: z.boolean().optional(),
+  pistacheSize: z.string().optional(),
+  pistacheQuantity: z.string().optional(),
+  speculoos: z.boolean().optional(),
+  speculoosSize: z.string().optional(),
+  speculoosQuantity: z.string().optional(),
+  noisette: z.boolean().optional(),
+  noisetteSize: z.string().optional(),
+  noisetteQuantity: z.string().optional(),
 });
 
 type OrderFormData = z.infer<typeof orderFormSchema>;
@@ -92,51 +86,36 @@ export default function Order() {
 
   const onSubmit = (data: OrderFormData) => {
     const products = [];
-    const pricing = { small: 6, medium: 10, party: 25 };
+    const pricing = { small: 10, medium: 15, party: 0 };
 
     // Process selected products
-    if (data.classic && data.classicSize && data.classicQuantity) {
+    if (data.pistache && data.pistacheSize && data.pistacheQuantity) {
+      const price = data.pistacheSize === "party" ? "Custom Price" : pricing[data.pistacheSize as keyof typeof pricing] * parseInt(data.pistacheQuantity);
       products.push({
-        name: "Classic Tiramisu",
-        size: data.classicSize as "small" | "medium" | "party",
-        quantity: parseInt(data.classicQuantity),
-        price: pricing[data.classicSize as keyof typeof pricing] * parseInt(data.classicQuantity),
+        name: "Tiramisu Pistache",
+        size: data.pistacheSize as "small" | "medium" | "party",
+        quantity: parseInt(data.pistacheQuantity),
+        price: typeof price === "number" ? price : 0,
       });
     }
 
-    if (data.pistachio && data.pistachioSize && data.pistachioQuantity) {
+    if (data.speculoos && data.speculoosSize && data.speculoosQuantity) {
+      const price = data.speculoosSize === "party" ? "Custom Price" : pricing[data.speculoosSize as keyof typeof pricing] * parseInt(data.speculoosQuantity);
       products.push({
-        name: "Pistachio Dreams",
-        size: data.pistachioSize as "small" | "medium" | "party",
-        quantity: parseInt(data.pistachioQuantity),
-        price: pricing[data.pistachioSize as keyof typeof pricing] * parseInt(data.pistachioQuantity),
+        name: "Tiramisu Spéculoos",
+        size: data.speculoosSize as "small" | "medium" | "party",
+        quantity: parseInt(data.speculoosQuantity),
+        price: typeof price === "number" ? price : 0,
       });
     }
 
-    if (data.strawberry && data.strawberrySize && data.strawberryQuantity) {
+    if (data.noisette && data.noisetteSize && data.noisetteQuantity) {
+      const price = data.noisetteSize === "party" ? "Custom Price" : pricing[data.noisetteSize as keyof typeof pricing] * parseInt(data.noisetteQuantity);
       products.push({
-        name: "Strawberry Bliss",
-        size: data.strawberrySize as "small" | "medium" | "party",
-        quantity: parseInt(data.strawberryQuantity),
-        price: pricing[data.strawberrySize as keyof typeof pricing] * parseInt(data.strawberryQuantity),
-      });
-    }
-
-    if (data.nutella && data.nutellaSize && data.nutellaQuantity) {
-      products.push({
-        name: "Nutella Heaven",
-        size: data.nutellaSize as "small" | "medium" | "party",
-        quantity: parseInt(data.nutellaQuantity),
-        price: pricing[data.nutellaSize as keyof typeof pricing] * parseInt(data.nutellaQuantity),
-      });
-    }
-
-    if (data.lotus && data.lotusSize && data.lotusQuantity) {
-      products.push({
-        name: "Lotus Caramel",
-        size: data.lotusSize as "small" | "medium" | "party",
-        quantity: parseInt(data.lotusQuantity),
-        price: pricing[data.lotusSize as keyof typeof pricing] * parseInt(data.lotusQuantity),
+        name: "Tiramisu Noisette",
+        size: data.noisetteSize as "small" | "medium" | "party",
+        quantity: parseInt(data.noisetteQuantity),
+        price: typeof price === "number" ? price : 0,
       });
     }
 
@@ -269,24 +248,24 @@ export default function Order() {
                   <div className="space-y-4">
                     <h4 className="font-semibold text-espresso">Select Your Tiramisu</h4>
                     
-                    {/* Classic Tiramisu */}
+                    {/* Tiramisu Pistache */}
                     <div className="flex items-center justify-between p-4 bg-warmWhite rounded-lg border border-espresso/20">
                       <FormField
                         control={form.control}
-                        name="classic"
+                        name="pistache"
                         render={({ field }) => (
                           <FormItem className="flex items-center space-x-3">
                             <FormControl>
                               <Checkbox checked={field.value} onCheckedChange={field.onChange} />
                             </FormControl>
-                            <FormLabel className="font-medium">Classic Tiramisu</FormLabel>
+                            <FormLabel className="font-medium">Tiramisu Pistache</FormLabel>
                           </FormItem>
                         )}
                       />
                       <div className="flex space-x-2">
                         <FormField
                           control={form.control}
-                          name="classicSize"
+                          name="pistacheSize"
                           render={({ field }) => (
                             <FormItem>
                               <Select onValueChange={field.onChange} value={field.value}>
@@ -296,9 +275,9 @@ export default function Order() {
                                   </SelectTrigger>
                                 </FormControl>
                                 <SelectContent>
-                                  <SelectItem value="small">Small (€6)</SelectItem>
-                                  <SelectItem value="medium">Medium (€10)</SelectItem>
-                                  <SelectItem value="party">Party Box (€25)</SelectItem>
+                                  <SelectItem value="small">Small (10 DT)</SelectItem>
+                                  <SelectItem value="medium">Large (15 DT)</SelectItem>
+                                  <SelectItem value="party">Birthday (Custom)</SelectItem>
                                 </SelectContent>
                               </Select>
                             </FormItem>
@@ -306,7 +285,7 @@ export default function Order() {
                         />
                         <FormField
                           control={form.control}
-                          name="classicQuantity"
+                          name="pistacheQuantity"
                           render={({ field }) => (
                             <FormItem>
                               <FormControl>
@@ -318,25 +297,24 @@ export default function Order() {
                       </div>
                     </div>
 
-                    {/* Repeat similar pattern for other products */}
-                    {/* Pistachio Dreams */}
+                    {/* Tiramisu Spéculoos */}
                     <div className="flex items-center justify-between p-4 bg-warmWhite rounded-lg border border-espresso/20">
                       <FormField
                         control={form.control}
-                        name="pistachio"
+                        name="speculoos"
                         render={({ field }) => (
                           <FormItem className="flex items-center space-x-3">
                             <FormControl>
                               <Checkbox checked={field.value} onCheckedChange={field.onChange} />
                             </FormControl>
-                            <FormLabel className="font-medium">Pistachio Dreams</FormLabel>
+                            <FormLabel className="font-medium">Tiramisu Spéculoos</FormLabel>
                           </FormItem>
                         )}
                       />
                       <div className="flex space-x-2">
                         <FormField
                           control={form.control}
-                          name="pistachioSize"
+                          name="speculoosSize"
                           render={({ field }) => (
                             <FormItem>
                               <Select onValueChange={field.onChange} value={field.value}>
@@ -346,9 +324,9 @@ export default function Order() {
                                   </SelectTrigger>
                                 </FormControl>
                                 <SelectContent>
-                                  <SelectItem value="small">Small (€6)</SelectItem>
-                                  <SelectItem value="medium">Medium (€10)</SelectItem>
-                                  <SelectItem value="party">Party Box (€25)</SelectItem>
+                                  <SelectItem value="small">Small (10 DT)</SelectItem>
+                                  <SelectItem value="medium">Large (15 DT)</SelectItem>
+                                  <SelectItem value="party">Birthday (Custom)</SelectItem>
                                 </SelectContent>
                               </Select>
                             </FormItem>
@@ -356,7 +334,7 @@ export default function Order() {
                         />
                         <FormField
                           control={form.control}
-                          name="pistachioQuantity"
+                          name="speculoosQuantity"
                           render={({ field }) => (
                             <FormItem>
                               <FormControl>
@@ -368,7 +346,54 @@ export default function Order() {
                       </div>
                     </div>
 
-                    {/* Add similar blocks for strawberry, nutella, and lotus */}
+                    {/* Tiramisu Noisette */}
+                    <div className="flex items-center justify-between p-4 bg-warmWhite rounded-lg border border-espresso/20">
+                      <FormField
+                        control={form.control}
+                        name="noisette"
+                        render={({ field }) => (
+                          <FormItem className="flex items-center space-x-3">
+                            <FormControl>
+                              <Checkbox checked={field.value} onCheckedChange={field.onChange} />
+                            </FormControl>
+                            <FormLabel className="font-medium">Tiramisu Noisette</FormLabel>
+                          </FormItem>
+                        )}
+                      />
+                      <div className="flex space-x-2">
+                        <FormField
+                          control={form.control}
+                          name="noisetteSize"
+                          render={({ field }) => (
+                            <FormItem>
+                              <Select onValueChange={field.onChange} value={field.value}>
+                                <FormControl>
+                                  <SelectTrigger className="w-32">
+                                    <SelectValue placeholder="Size" />
+                                  </SelectTrigger>
+                                </FormControl>
+                                <SelectContent>
+                                  <SelectItem value="small">Small (10 DT)</SelectItem>
+                                  <SelectItem value="medium">Large (15 DT)</SelectItem>
+                                  <SelectItem value="party">Birthday (Custom)</SelectItem>
+                                </SelectContent>
+                              </Select>
+                            </FormItem>
+                          )}
+                        />
+                        <FormField
+                          control={form.control}
+                          name="noisetteQuantity"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormControl>
+                                <Input type="number" min="1" max="10" placeholder="Qty" className="w-16" {...field} />
+                              </FormControl>
+                            </FormItem>
+                          )}
+                        />
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
